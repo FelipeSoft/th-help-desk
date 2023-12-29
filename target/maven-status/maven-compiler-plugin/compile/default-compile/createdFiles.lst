@@ -1,9 +1,14 @@
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI.class
-com\thsolucoes\helpdesk\ui\HomeUI$1.class
-com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$1.class
+com\thsolucoes\helpdesk\domain\Token.class
+com\thsolucoes\helpdesk\services\AuthenticationService.class
+com\thsolucoes\helpdesk\services\JacksonService.class
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$4.class
 com\thsolucoes\helpdesk\Application.class
-com\thsolucoes\helpdesk\ui\HomeUI.class
+com\thsolucoes\helpdesk\services\HttpService.class
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$2.class
+com\thsolucoes\helpdesk\domain\Serializer.class
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$3.class
+com\thsolucoes\helpdesk\ui\HomeUI$1.class
+com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$1.class
+com\thsolucoes\helpdesk\ui\HomeUI.class
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$5.class

@@ -4,7 +4,12 @@
  */
 package com.thsolucoes.helpdesk.ui;
 
-import java.awt.Font;
+import com.thsolucoes.helpdesk.domain.Serializer;
+import com.thsolucoes.helpdesk.domain.Token;
+import com.thsolucoes.helpdesk.services.AuthenticationService;
+import com.thsolucoes.helpdesk.services.HttpService;
+import com.thsolucoes.helpdesk.services.JacksonService;
+import java.net.http.HttpResponse;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,11 +17,16 @@ import javax.swing.JOptionPane;
  * @author felip
  */
 public class TokenAuthenticationUI extends javax.swing.JFrame {
-
+    private final HttpService HttpServiceHandler;
+    private final AuthenticationService AuthenticationServiceHandler;
+    private final Serializer serializer;
     /**
      * Creates new form TokenAuthenticationUI
      */
     public TokenAuthenticationUI() {
+        this.HttpServiceHandler = new HttpService("http://localhost:8080");
+        this.AuthenticationServiceHandler = new AuthenticationService(this.HttpServiceHandler);
+        this.serializer = new JacksonService();
         initComponents();
     }
 
@@ -105,9 +115,7 @@ public class TokenAuthenticationUI extends javax.swing.JFrame {
 
         JTokenField.setBackground(new java.awt.Color(204, 204, 204));
         JTokenField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        JTokenField.setForeground(new java.awt.Color(0, 0, 0));
         JTokenField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        JTokenField.setCaretColor(new java.awt.Color(0, 0, 0));
         JTokenField.setMaximumSize(new java.awt.Dimension(40, 40));
         JTokenField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,7 +181,7 @@ public class TokenAuthenticationUI extends javax.swing.JFrame {
         label1.setText("No seu aplicativo ServiceDesk na seção Repositório > Clientes, localize o cliente desejado e selecione-o.");
 
         label2.setForeground(new java.awt.Color(102, 102, 102));
-        label2.setText("Em seguida, identifique o código chamado TOKEN, que consiste em uma sequência de caracteres aleatórios");
+        label2.setText("Em seguida, identifique o código chamado TOKEN, que consiste em uma sequência de caracteres aleatórios.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -183,12 +191,6 @@ public class TokenAuthenticationUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 34, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -217,7 +219,12 @@ public class TokenAuthenticationUI extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JTokenErrorLabel))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 31, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,12 +293,21 @@ public class TokenAuthenticationUI extends javax.swing.JFrame {
 
         if (length == 0) {
             JOptionPane.showMessageDialog(null, "O campo token é obrigatório; portanto, não pode ser vazio!", "Token Inválido", JOptionPane.ERROR_MESSAGE);
-        }
-
-        if (length > 40) {
-            this.JTokenErrorLabel.setText("O tamanho do token não pode exceder 40 caracteres!");
-        } else if (length < 40) {
-            this.JTokenErrorLabel.setText("O tamanho do token deve atingir 40 caracteres!");
+        } else {
+            if (length > 40) {
+                this.JTokenErrorLabel.setText("O tamanho do token não pode exceder 40 caracteres!");
+            } else if (length < 40) {
+                this.JTokenErrorLabel.setText("O tamanho do token deve atingir 40 caracteres!");
+            } else {
+                this.JTokenErrorLabel.setText(" ");
+                String tokenFromUI = this.JTokenField.getText();
+                String body = this.serializer.serialize(new Token(tokenFromUI));
+                HttpResponse response = this.HttpServiceHandler.post("/agent/token", body);
+                System.out.println(response.body());
+                if (!(response.statusCode() == 200)) {
+                    JOptionPane.showMessageDialog(null, "Não foi possível encontrar nenhum cliente com o token informado. Verifique o token e tente novamente.", "Token Desconhecido", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
     }//GEN-LAST:event_JValidateTokenButtonActionPerformed
 
