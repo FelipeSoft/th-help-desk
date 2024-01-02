@@ -27,11 +27,11 @@ public class JacksonService implements Serializer {
     }
 
     @Override
-    public String deserialize(String data, Object transformTo) {
+    public Object deserialize(String data, Object transformTo) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             transformTo = mapper.readValue(data, transformTo.getClass());
-            return transformTo.toString();
+            return transformTo;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return null;

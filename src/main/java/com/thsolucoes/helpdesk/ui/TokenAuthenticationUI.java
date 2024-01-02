@@ -4,22 +4,28 @@
  */
 package com.thsolucoes.helpdesk.ui;
 
+import com.thsolucoes.helpdesk.domain.Client;
 import com.thsolucoes.helpdesk.domain.Serializer;
 import com.thsolucoes.helpdesk.domain.Token;
 import com.thsolucoes.helpdesk.services.AuthenticationService;
+import com.thsolucoes.helpdesk.services.ClientSessionManager;
 import com.thsolucoes.helpdesk.services.HttpService;
 import com.thsolucoes.helpdesk.services.JacksonService;
 import java.net.http.HttpResponse;
 import javax.swing.JOptionPane;
+import com.thsolucoes.helpdesk.ui.HomeUI;
 
 /**
  *
  * @author felip
  */
 public class TokenAuthenticationUI extends javax.swing.JFrame {
+    
     private final HttpService HttpServiceHandler;
     private final AuthenticationService AuthenticationServiceHandler;
     private final Serializer serializer;
+    private Client client;
+
     /**
      * Creates new form TokenAuthenticationUI
      */
@@ -84,7 +90,7 @@ public class TokenAuthenticationUI extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(22, 22, 22))
         );
@@ -144,12 +150,12 @@ public class TokenAuthenticationUI extends javax.swing.JFrame {
         JCompanyLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         JCompanyLabel.setForeground(new java.awt.Color(102, 102, 102));
         JCompanyLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        JCompanyLabel.setText("TH Soluções (FAMELHOR LTDA)");
+        JCompanyLabel.setText("Nome Fantasia (Razão Social)");
 
         JCompanyOwnerLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         JCompanyOwnerLabel.setForeground(new java.awt.Color(102, 102, 102));
         JCompanyOwnerLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        JCompanyOwnerLabel.setText("Fernando Henrique de Almeida");
+        JCompanyOwnerLabel.setText("Van Gogh");
 
         JEnterpriseIdentifierLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         JEnterpriseIdentifierLabel.setForeground(new java.awt.Color(102, 102, 102));
@@ -230,7 +236,7 @@ public class TokenAuthenticationUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(26, 26, 26)
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -268,8 +274,6 @@ public class TokenAuthenticationUI extends javax.swing.JFrame {
                 .addGap(34, 34, 34))
         );
 
-        label2.getAccessibleContext().setAccessibleName("Em seguida, identifique o código chamado TOKEN, que consiste em uma sequência de caracteres aleatórios.");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -290,7 +294,7 @@ public class TokenAuthenticationUI extends javax.swing.JFrame {
 
     private void JValidateTokenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JValidateTokenButtonActionPerformed
         int length = this.JTokenField.getText().length();
-
+        
         if (length == 0) {
             JOptionPane.showMessageDialog(null, "O campo token é obrigatório; portanto, não pode ser vazio!", "Token Inválido", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -302,23 +306,56 @@ public class TokenAuthenticationUI extends javax.swing.JFrame {
                 this.JTokenErrorLabel.setText(" ");
                 String tokenFromUI = this.JTokenField.getText();
                 String body = this.serializer.serialize(new Token(tokenFromUI));
-                HttpResponse response = this.HttpServiceHandler.post("/agent/token", body);
-                System.out.println(response.body());
-                if (!(response.statusCode() == 200)) {
+                HttpResponse response = this.HttpServiceHandler.post("/resources/agent/token", body);
+                if (response == null) {
+                    JOptionPane.showMessageDialog(null, "Estamos com problemas no servidor. Por favor, aguarde alguns instantes e tente novamente.", "Erro Interno no Servidor", JOptionPane.ERROR_MESSAGE);
+                } else if (!(response.statusCode() == 200)) {
                     JOptionPane.showMessageDialog(null, "Não foi possível encontrar nenhum cliente com o token informado. Verifique o token e tente novamente.", "Token Desconhecido", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Tudo certo! Verifique se as informações são as mesmas do cliente desejado, em seguida clique no botão de confirmar.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    Client client = (Client) this.serializer.deserialize((String) response.body(), new Client());
+                    this.client = client;
+                    this.JCompanyLabel.setText(this.client.company);
+                    this.JCompanyOwnerLabel.setText(this.client.owner);
+                    this.JEnterpriseIdentifierLabel.setText(this.client.enterpriseIdentifier);
                 }
             }
         }
     }//GEN-LAST:event_JValidateTokenButtonActionPerformed
 
     private void JConfirmDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JConfirmDataButtonActionPerformed
-        // TODO add your handling code here:
+        if (this.JCompanyLabel.getText().equals("Nome Fantasia (Razão Social)")
+                || this.JCompanyOwnerLabel.getText().equals("Van Gogh")
+                || this.JEnterpriseIdentifierLabel.getText().equals("XX.XXX.XXX/YYYY-ZZ")) {
+            JOptionPane.showMessageDialog(null, "Por favor, forneça as informações necessárias para a autenticação.", "Informações Ausentes", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int option = JOptionPane.showConfirmDialog(null, "Deseja confirmar as informações inseridas?", "Confirmação", JOptionPane.OK_CANCEL_OPTION);
+            if (option == JOptionPane.OK_OPTION) {
+                ClientSessionManager.saveActiveClient(this.client);
+                
+                HomeUI homeUI = new HomeUI();
+                homeUI.setVisible(true);
+                StringBuilder builder = new StringBuilder();
+                
+                builder.append(this.client.company);
+                int pointer = builder.indexOf("(", 0);
+                
+                String firstName = builder.substring(0, pointer - 1);
+                homeUI.getJGreetingsLabel().setText("Olá, " + firstName);
+                
+                this.dispose();
+            }
+        }
+
     }//GEN-LAST:event_JConfirmDataButtonActionPerformed
 
     private void JCancelDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCancelDataButtonActionPerformed
-        // TODO add your handling code here:
+        this.JCompanyLabel.setText("Nome Fantasia (Razão Social)");
+        this.JCompanyOwnerLabel.setText("Van Gogh");
+        this.JEnterpriseIdentifierLabel.setText("XX.XXX.XXX/YYYY-ZZ");
+        JOptionPane.showMessageDialog(null, "As informações foram canceladas com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_JCancelDataButtonActionPerformed
-
+    
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -348,4 +385,5 @@ public class TokenAuthenticationUI extends javax.swing.JFrame {
     private java.awt.Label label1;
     private java.awt.Label label2;
     // End of variables declaration//GEN-END:variables
-}
+}                 
+

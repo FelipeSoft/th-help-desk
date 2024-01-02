@@ -102,7 +102,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Component id="label1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   <Component id="label2" min="-2" max="-2" attributes="0"/>
@@ -171,7 +171,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="24" max="32767" attributes="0"/>
+                      <EmptySpace pref="26" max="32767" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
@@ -317,7 +317,7 @@
               <Color blue="66" green="66" red="66" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" value="TH Solu&#xe7;&#xf5;es (FAMELHOR LTDA)"/>
+            <Property name="text" type="java.lang.String" value="Nome Fantasia (Raz&#xe3;o Social)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="JCompanyOwnerLabel">
@@ -329,7 +329,7 @@
               <Color blue="66" green="66" red="66" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" value="Fernando Henrique de Almeida"/>
+            <Property name="text" type="java.lang.String" value="Van Gogh"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="JEnterpriseIdentifierLabel">
@@ -396,9 +396,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Em seguida, identifique o c&#xf3;digo chamado TOKEN, que consiste em uma sequ&#xea;ncia de caracteres aleat&#xf3;rios."/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Em seguida, identifique o c&#xf3;digo chamado TOKEN, que consiste em uma sequ&#xea;ncia de caracteres aleat&#xf3;rios."/>
-          </AccessibilityProperties>
         </Component>
       </SubComponents>
     </Container>

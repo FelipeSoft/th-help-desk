@@ -11,7 +11,6 @@ import java.net.http.HttpResponse;
  * @author NTH05
  */
 public class AuthenticationService {
-
     private String token;
     private final HttpService HttpServiceHandler;
 
