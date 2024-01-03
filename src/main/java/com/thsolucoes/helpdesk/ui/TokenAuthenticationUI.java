@@ -13,7 +13,6 @@ import com.thsolucoes.helpdesk.services.HttpService;
 import com.thsolucoes.helpdesk.services.JacksonService;
 import java.net.http.HttpResponse;
 import javax.swing.JOptionPane;
-import com.thsolucoes.helpdesk.ui.HomeUI;
 
 /**
  *
@@ -357,10 +356,8 @@ public class TokenAuthenticationUI extends javax.swing.JFrame {
     }//GEN-LAST:event_JCancelDataButtonActionPerformed
     
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TokenAuthenticationUI().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new TokenAuthenticationUI().setVisible(true);
         });
     }
 

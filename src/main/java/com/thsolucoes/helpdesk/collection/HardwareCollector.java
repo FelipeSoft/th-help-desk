@@ -5,16 +5,12 @@
 package com.thsolucoes.helpdesk.collection;
 
 import oshi.SystemInfo;
-import oshi.software.os.OSProcess;
-import oshi.software.os.OSService;
 
 public class HardwareCollector {
 
     public static void main(String[] args) {
         SystemInfo si = new SystemInfo();
-        for (OSService element: si.getOperatingSystem().getServices()) {
-            System.out.println("Nome: " + element.getName() + "; Estado: " + element.getState());
-        }
+        System.out.println("Temperatura: " + si.getHardware().getSensors().getCpuTemperature());
         // System.out.println("Armazenamento: " + si.getHardware().getDiskStores());;;
         // System.out.println("Sistema de Computador: " + si.getHardware().getComputerSystem());
         // System.out.println("Displays: " + si.getHardware().getDisplays());
