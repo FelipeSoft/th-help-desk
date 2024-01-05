@@ -18,6 +18,9 @@ public class HardwareCollector {
             System.out.println("Janela do Desktop: " + element.getTitle());
         }
         
+        System.out.println("Temperatura: " + si.getHardware().getSensors().getCpuTemperature());
+        // System.out.println("Armazenamento: " + si.getHardware().getDiskStores());;;
+        // System.out.println("Sistema de Computador: " + si.getHardware().getComputerSystem());
         // System.out.println("Displays: " + si.getHardware().getDisplays());
         // System.out.println("Cartões Gráficos: " + si.getHardware().getGraphicsCards());
         // System.out.println("Grupos de Volumes Lógicos: " + si.getHardware().getLogicalVolumeGroups());

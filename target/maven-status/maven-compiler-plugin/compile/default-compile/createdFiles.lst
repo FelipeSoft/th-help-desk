@@ -10,11 +10,13 @@ com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$2.class
 com\thsolucoes\helpdesk\domain\Serializer.class
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$3.class
 com\thsolucoes\helpdesk\ui\HomeUI$2.class
+com\thsolucoes\helpdesk\hardware\StorageUnit.class
 com\thsolucoes\helpdesk\domain\Client.class
 com\thsolucoes\helpdesk\ui\HomeUI$1.class
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$1.class
 com\thsolucoes\helpdesk\services\ClientSessionManager.class
+com\thsolucoes\helpdesk\hardware\CentralProcessingUnit.class
 com\thsolucoes\helpdesk\ui\HomeUI$3.class
 com\thsolucoes\helpdesk\ui\HomeUI.class
+com\thsolucoes\helpdesk\hardware\RandomMemory.class
 com\thsolucoes\helpdesk\ui\HomeUI$4.class
-com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$5.class
