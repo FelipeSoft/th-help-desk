@@ -10,6 +10,7 @@ com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$2.class
 com\thsolucoes\helpdesk\domain\Serializer.class
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$3.class
 com\thsolucoes\helpdesk\ui\HomeUI$2.class
+com\thsolucoes\helpdesk\hardware\StorageUnit.class
 com\thsolucoes\helpdesk\domain\Client.class
 com\thsolucoes\helpdesk\ui\HomeUI$1.class
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$1.class

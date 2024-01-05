@@ -11,9 +11,8 @@ public class CentralProcessingUnit {
 
     private static final SystemInfo si = new SystemInfo();
     private static final CentralProcessor processor = si.getHardware().getProcessor();
-    private static final int numCores = processor.getLogicalProcessorCount();
 
-    private static long[] prevTicks = new long[CentralProcessor.TickType.values().length];
+    private final static long[] prevTicks = new long[CentralProcessor.TickType.values().length];
     private static short minutesCounter = 0;
 
     private static double usageAverage = 0;

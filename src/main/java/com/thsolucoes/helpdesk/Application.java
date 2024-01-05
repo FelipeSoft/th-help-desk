@@ -3,8 +3,6 @@
  */
 package com.thsolucoes.helpdesk;
 
-import dyorgio.runtime.cpu.watcher.CpuWatcher;
-
 /**
  *
  * @author felip
