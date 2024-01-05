@@ -17,4 +17,5 @@ com\thsolucoes\helpdesk\services\ClientSessionManager.class
 com\thsolucoes\helpdesk\hardware\CentralProcessingUnit.class
 com\thsolucoes\helpdesk\ui\HomeUI$3.class
 com\thsolucoes\helpdesk\ui\HomeUI.class
+com\thsolucoes\helpdesk\hardware\RandomMemory.class
 com\thsolucoes\helpdesk\ui\HomeUI$4.class
