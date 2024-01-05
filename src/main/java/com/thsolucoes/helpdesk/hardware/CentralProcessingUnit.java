@@ -1,15 +1,11 @@
 package com.thsolucoes.helpdesk.hardware;
 
-import java.lang.management.ManagementFactory;
-import java.lang.management.OperatingSystemMXBean;
-import java.util.List;
+import java.text.DecimalFormat;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
-// import oshi.hardware.CentralProcessor.LogicalProcessor;
-// import oshi.software.os.OSProcess;
 
 public class CentralProcessingUnit {
 
@@ -27,9 +23,10 @@ public class CentralProcessingUnit {
 
         Runnable task = () -> {
             double usage = getCpuUsage();
+            DecimalFormat df = new DecimalFormat("#0,00");
             if (minutesCounter == 12) {
                 double average = (usageAverage / 12);
-                System.out.println("Média de Uso da CPU: " + (usageAverage / 12) + "%");
+                System.out.println("Média de Uso da CPU: " + df.format((usageAverage / 12) * 100) + "%");
                 if (average >= 70) {
                     System.out.println("CPU Overload!");
                 }
@@ -37,7 +34,7 @@ public class CentralProcessingUnit {
                 usageAverage = 0;
                 return;
             }
-            System.out.println("CPU USAGE: " + usage + "%");
+            System.out.println("CPU USAGE: " + df.format(usage * 100) + "%");
             minutesCounter++;
             usageAverage += usage;
         };
