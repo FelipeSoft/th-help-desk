@@ -7,16 +7,17 @@ package com.thsolucoes.helpdesk.collection;
 import oshi.SystemInfo;
 import oshi.software.os.OSProcess;
 import oshi.software.os.OSService;
+import oshi.software.os.OSDesktopWindow;
 
 public class HardwareCollector {
 
     public static void main(String[] args) {
         SystemInfo si = new SystemInfo();
-        for (OSService element: si.getOperatingSystem().getServices()) {
-            System.out.println("Nome: " + element.getName() + "; Estado: " + element.getState());
+       
+        for (OSDesktopWindow element : si.getOperatingSystem().getDesktopWindows(true)) {
+            System.out.println("Janela do Desktop: " + element.getTitle());
         }
-        // System.out.println("Armazenamento: " + si.getHardware().getDiskStores());;;
-        // System.out.println("Sistema de Computador: " + si.getHardware().getComputerSystem());
+        
         // System.out.println("Displays: " + si.getHardware().getDisplays());
         // System.out.println("Cartões Gráficos: " + si.getHardware().getGraphicsCards());
         // System.out.println("Grupos de Volumes Lógicos: " + si.getHardware().getLogicalVolumeGroups());
