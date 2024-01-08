@@ -1,12 +1,11 @@
 package com.thsolucoes.helpdesk.hardware;
 
-import java.text.DecimalFormat;
+import com.thsolucoes.helpdesk.domain.CPU;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
-import java.util.List;
 
 public class CentralProcessingUnit {
 
@@ -18,23 +17,23 @@ public class CentralProcessingUnit {
 
     private static double usageAverage = 0;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void track() throws InterruptedException {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        CPU cpu = new CPU();
 
         Runnable task = () -> {
             double usage = getCpuUsage();
-            DecimalFormat df = new DecimalFormat("#0,00");
             if (minutesCounter == 12) {
                 double average = (usageAverage / 12);
-                System.out.println("Média de Uso da CPU: " + df.format((usageAverage / 12) * 100) + "%");
+                cpu.setAverage(average);
                 if (average >= 70) {
-                    System.out.println("CPU Overload!");
+                    cpu.setOverload(true);
                 }
                 minutesCounter = 0;
                 usageAverage = 0;
                 return;
             }
-            System.out.println("CPU USAGE: " + df.format(usage * 100) + "%");
+            cpu.setUsage(usage);
             minutesCounter++;
             usageAverage += usage;
         };

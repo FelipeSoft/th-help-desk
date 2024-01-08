@@ -16,6 +16,7 @@ com\thsolucoes\helpdesk\ui\HomeUI$1.class
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$1.class
 com\thsolucoes\helpdesk\services\ClientSessionManager.class
 com\thsolucoes\helpdesk\hardware\CentralProcessingUnit.class
+com\thsolucoes\helpdesk\services\SocketService.class
 com\thsolucoes\helpdesk\ui\HomeUI$3.class
 com\thsolucoes\helpdesk\ui\HomeUI.class
 com\thsolucoes\helpdesk\hardware\RandomMemory.class
