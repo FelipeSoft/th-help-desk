@@ -1,53 +1,55 @@
 package com.thsolucoes.helpdesk.hardware;
 
 import com.thsolucoes.helpdesk.domain.CPU;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 
+// Lembrar de ajustar as informações de retorno do método track(), ele deve retornar dados da classe CPU;
+// Não está atribuindo a média de uso da cpu na classe CPU;
 public class CentralProcessingUnit {
 
     private static final SystemInfo si = new SystemInfo();
     private static final CentralProcessor processor = si.getHardware().getProcessor();
 
     private final static long[] prevTicks = new long[CentralProcessor.TickType.values().length];
-    private static short minutesCounter = 0;
+    private static double usage;
 
-    private static double usageAverage = 0;
+    public static double usageAverage = 0;
+    public static short minutesCounter = 0;
+    public static CPU cpu = new CPU();
 
-    public static void track() throws InterruptedException {
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        CPU cpu = new CPU();
-
-        Runnable task = () -> {
-            double usage = getCpuUsage();
-            if (minutesCounter == 12) {
-                double average = (usageAverage / 12);
-                cpu.setAverage(average);
-                if (average >= 70) {
-                    cpu.setOverload(true);
-                }
-                minutesCounter = 0;
-                usageAverage = 0;
-                return;
+    public static CPU track() {
+        usage = getCpuUsage();
+        if (minutesCounter == 12) {
+            double average = (usageAverage / 12);
+            cpu.setAverage(average);
+            if (Double.parseDouble(cpu.average) >= 70) {
+                cpu.setOverload(true);
+            } else {
+                cpu.setOverload(false);
             }
-            cpu.setUsage(usage);
-            minutesCounter++;
-            usageAverage += usage;
-        };
+        } else {
+            load(); 
+            cpu.setAverage(usageAverage / 12);
+        }
+        System.out.println("---------Count---------");
+        System.out.println(minutesCounter);
+        return cpu;
+    }
 
-        scheduler.scheduleAtFixedRate(task, 0, 1, TimeUnit.SECONDS);
+    public static void load() {
+        cpu.setUsage(usage);
+        minutesCounter++;
+        usageAverage += usage;
     }
 
     private static double getCpuUsage() {
         long[] ticks = processor.getSystemCpuLoadTicks();
 
-        double usage = processor.getSystemCpuLoadBetweenTicks(prevTicks) * 100;
+        double usageFromCpuUsageMethod = processor.getSystemCpuLoadBetweenTicks(prevTicks) * 100;
         System.arraycopy(ticks, 0, prevTicks, 0, ticks.length);
 
-        return usage;
+        return usageFromCpuUsageMethod;
     }
 
     /* private static double getCpuUsage() {
