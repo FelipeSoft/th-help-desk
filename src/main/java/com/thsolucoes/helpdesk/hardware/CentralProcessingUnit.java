@@ -6,6 +6,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
+import java.util.List;
 
 public class CentralProcessingUnit {
 
@@ -38,7 +39,7 @@ public class CentralProcessingUnit {
             usageAverage += usage;
         };
 
-        scheduler.scheduleAtFixedRate(task, 0, 5, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(task, 0, 1, TimeUnit.SECONDS);
     }
 
     private static double getCpuUsage() {
