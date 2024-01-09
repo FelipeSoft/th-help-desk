@@ -24,7 +24,6 @@ public class ClientSocketService {
         try {
             this.socket = new Socket(this.host, this.port);
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RuntimeException("Falha ao criar a conexão com o servidor socket.");
         }
     }

@@ -1,46 +1,36 @@
 package com.thsolucoes.helpdesk.hardware;
 
-import com.thsolucoes.helpdesk.domain.CPU;
+import com.thsolucoes.helpdesk.domain.Output;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
+import java.util.List;
 
 // Lembrar de ajustar as informações de retorno do método track(), ele deve retornar dados da classe CPU;
 // Não está atribuindo a média de uso da cpu na classe CPU;
 public class CentralProcessingUnit {
-
     private static final SystemInfo si = new SystemInfo();
     private static final CentralProcessor processor = si.getHardware().getProcessor();
 
     private final static long[] prevTicks = new long[CentralProcessor.TickType.values().length];
     private static double usage;
 
-    public static double usageAverage = 0;
     public static short minutesCounter = 0;
-    public static CPU cpu = new CPU();
+    public static Output output = new Output();
 
-    public static CPU track() {
-        usage = getCpuUsage();
-        if (minutesCounter == 12) {
-            double average = (usageAverage / 12);
-            cpu.setAverage(average);
-            if (Double.parseDouble(cpu.average) >= 70) {
-                cpu.setOverload(true);
-            } else {
-                cpu.setOverload(false);
-            }
-        } else {
-            load(); 
-            cpu.setAverage(usageAverage / 12);
-        }
-        System.out.println("---------Count---------");
-        System.out.println(minutesCounter);
-        return cpu;
+    public static Output track() {
+        double usage = getCpuUsage();
+        output.setUsage(usage);
+        output.log(usage); 
+        return output;
+    }
+
+    public static List<Double> average() {
+        return output.logs;
     }
 
     public static void load() {
-        cpu.setUsage(usage);
+        output.setUsage(usage);
         minutesCounter++;
-        usageAverage += usage;
     }
 
     private static double getCpuUsage() {
