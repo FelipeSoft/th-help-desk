@@ -3,8 +3,12 @@ C:\Users\NTH05\Desktop\Felipe\Projetos\Connect Care\th-help-desk\src\main\java\c
 C:\Users\NTH05\Desktop\Felipe\Projetos\Connect Care\th-help-desk\src\main\java\com\thsolucoes\helpdesk\services\JacksonService.java
 C:\Users\NTH05\Desktop\Felipe\Projetos\Connect Care\th-help-desk\src\main\java\com\thsolucoes\helpdesk\Application.java
 C:\Users\NTH05\Desktop\Felipe\Projetos\Connect Care\th-help-desk\src\main\java\com\thsolucoes\helpdesk\ui\TokenAuthenticationUI.java
+C:\Users\NTH05\Desktop\Felipe\Projetos\Connect Care\th-help-desk\src\main\java\Output.java
+C:\Users\NTH05\Desktop\Felipe\Projetos\Connect Care\th-help-desk\src\main\java\com\thsolucoes\helpdesk\gateways\SoftwareCollectorGateway.java
 C:\Users\NTH05\Desktop\Felipe\Projetos\Connect Care\th-help-desk\src\main\java\com\thsolucoes\helpdesk\domain\Client.java
+C:\Users\NTH05\Desktop\Felipe\Projetos\Connect Care\th-help-desk\src\main\java\com\thsolucoes\helpdesk\domain\StorageUnit\OutputSU.java
 C:\Users\NTH05\Desktop\Felipe\Projetos\Connect Care\th-help-desk\src\main\java\com\thsolucoes\helpdesk\domain\Token.java
+C:\Users\NTH05\Desktop\Felipe\Projetos\Connect Care\th-help-desk\src\main\java\com\thsolucoes\helpdesk\gateways\GlobalCollectorGateway.java
 C:\Users\NTH05\Desktop\Felipe\Projetos\Connect Care\th-help-desk\src\main\java\com\thsolucoes\helpdesk\services\HttpService.java
 C:\Users\NTH05\Desktop\Felipe\Projetos\Connect Care\th-help-desk\src\main\java\com\thsolucoes\helpdesk\services\ClientSocketService.java
 C:\Users\NTH05\Desktop\Felipe\Projetos\Connect Care\th-help-desk\src\main\java\com\thsolucoes\helpdesk\domain\Serializer.java

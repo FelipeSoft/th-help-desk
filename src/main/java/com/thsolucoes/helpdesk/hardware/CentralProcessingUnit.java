@@ -18,7 +18,7 @@ public class CentralProcessingUnit {
     public static Output output = new Output();
 
     public static Output track() {
-        double usage = getCpuUsage();
+        usage = getCpuUsage();
         output.setUsage(usage);
         output.log(usage); 
         return output;

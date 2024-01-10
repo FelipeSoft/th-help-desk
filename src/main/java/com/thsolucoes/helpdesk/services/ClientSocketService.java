@@ -16,14 +16,15 @@ import org.json.JSONObject;
  */
 public class ClientSocketService {
 
-    private final String host = "localhost";
-    private final int port = 8081;
+    private final String host = "127.0.0.1";
+    private final int port = 8345;
     private final Socket socket;
 
     public ClientSocketService() {
         try {
             this.socket = new Socket(this.host, this.port);
         } catch (IOException e) {
+            System.out.println("Não foi possível se conectar ao servidor socket.");
             throw new RuntimeException("Falha ao criar a conexão com o servidor socket.");
         }
     }

@@ -5,10 +5,6 @@
 package com.thsolucoes.helpdesk.hardware;
 
 import com.thsolucoes.helpdesk.domain.Output;
-import java.text.DecimalFormat;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import oshi.SystemInfo;
 
 /**
@@ -18,19 +14,19 @@ import oshi.SystemInfo;
 public class RandomMemory {
 
     private final static SystemInfo si = new SystemInfo();
-    private static Output output = new Output();
+    private final static Output output = new Output();
 
     public static Output track() {
         double usage = getRandomMemoryUsage();
         double percentage = (usage / (si.getHardware().getMemory().getTotal() / 1e9)) * 100;
 
-        output.log(percentage);
+        output.log(usage);
         
         if (percentage >= 80) {
-            output.setUsage(percentage);
+            output.setOverload(true);
         }
-        
-        output.setUsage(percentage);
+       
+        output.setUsage(usage);
         return output;
     }
 
