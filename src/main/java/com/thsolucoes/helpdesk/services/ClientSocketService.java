@@ -1,45 +1,79 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.thsolucoes.helpdesk.services;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.Socket;
-import org.json.JSONObject;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Timer;
+import java.util.TimerTask;
 
-/**
- *
- * @author NTH05
- */
-public class ClientSocketService {
+public class ClientSocketService extends WebSocketClient {
 
-    private final String host = "127.0.0.1";
-    private final int port = 8345;
-    private final Socket socket;
+    private static final String SERVER_URI = "ws://localhost:8345"; 
+    private static final long RECONNECT_INTERVAL = 5000;
 
-    public ClientSocketService() {
-        try {
-            this.socket = new Socket(this.host, this.port);
-        } catch (IOException e) {
-            System.out.println("Não foi possível se conectar ao servidor socket.");
-            throw new RuntimeException("Falha ao criar a conexão com o servidor socket.");
+    private Timer reconnectTimer;
+
+    public ClientSocketService() throws URISyntaxException {
+        super(new URI(SERVER_URI));
+        connect(); 
+    }
+
+    @Override
+    public void onOpen(ServerHandshake handshakedata) {
+        System.out.println("Conexão aberta");
+        cancelReconnect(); 
+    }
+
+    @Override
+    public void onMessage(String message) {
+        System.out.println("Mensagem recebida: " + message);
+    }
+
+    @Override
+    public void onClose(int code, String reason, boolean remote) {
+        System.out.println("Conexão fechada. Tentando reconectar...");
+        scheduleReconnect();
+    }
+
+    @Override
+    public void onError(Exception ex) {
+    }
+
+    private void scheduleReconnect() {
+        if (reconnectTimer == null) {
+            reconnectTimer = new Timer();
+            reconnectTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    if (!isOpen()) {
+                        System.out.println("Tentando reconectar...");
+                        try {
+                            reconnectBlocking();
+                        } catch (InterruptedException e) {
+                        }
+                    } else {
+                        System.out.println("Conexão estabelecida com sucesso.");
+                        cancelReconnect();
+                    }
+                }
+            }, 0, RECONNECT_INTERVAL);
         }
     }
 
-    public void send(JSONObject json) throws IOException {
-        OutputStream output = this.socket.getOutputStream();
-        String stringified = json.toString();
-        output.write(stringified.getBytes());
+    private void cancelReconnect() {
+        if (reconnectTimer != null) {
+            reconnectTimer.cancel();
+            reconnectTimer.purge();
+            reconnectTimer = null;
+        }
     }
 
-    public String receive() throws IOException {
-        InputStream input = this.socket.getInputStream();
-        byte[] buffer = new byte[1024];
-        int bytes = input.read(buffer);
-        String data = new String(buffer, 0, bytes);
-        return data;
+    public void transmit(String json) {
+        if (isOpen()) {
+            send(json);
+        } else {
+            System.out.println("Conexão não está aberta.");
+        }
     }
 }

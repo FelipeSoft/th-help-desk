@@ -1,4 +1,5 @@
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI.class
+com\thsolucoes\helpdesk\services\ClientSocketIOService.class
 com\thsolucoes\helpdesk\services\AuthenticationService.class
 com\thsolucoes\helpdesk\Application.class
 com\thsolucoes\helpdesk\domain\Output.class
@@ -8,8 +9,8 @@ com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$3.class
 com\thsolucoes\helpdesk\ui\HomeUI$2.class
 com\thsolucoes\helpdesk\gateways\HardwareCollectorGateway.class
 com\thsolucoes\helpdesk\services\ClientSessionManager.class
+com\thsolucoes\helpdesk\services\ClientSocketService$1.class
 com\thsolucoes\helpdesk\ui\HomeUI$3.class
-Output.class
 com\thsolucoes\helpdesk\services\ClientSocketService.class
 com\thsolucoes\helpdesk\domain\Token.class
 com\thsolucoes\helpdesk\gateways\SoftwareCollectorGateway.class
