@@ -210,7 +210,11 @@ public class HomeUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JNewTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNewTicketButtonActionPerformed
-        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run () {
+                new OpenTicketUI().setVisible(true);
+            }
+        });
     }//GEN-LAST:event_JNewTicketButtonActionPerformed
 
     private void JConfigurationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JConfigurationsButtonActionPerformed

@@ -1,6 +1,7 @@
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI.class
 com\thsolucoes\helpdesk\services\ClientSocketIOService.class
 com\thsolucoes\helpdesk\services\AuthenticationService.class
+com\thsolucoes\helpdesk\ui\OpenTicketUI.class
 com\thsolucoes\helpdesk\Application.class
 com\thsolucoes\helpdesk\domain\Output.class
 com\thsolucoes\helpdesk\services\HttpService.class
@@ -14,14 +15,18 @@ com\thsolucoes\helpdesk\ui\HomeUI$3.class
 com\thsolucoes\helpdesk\services\ClientSocketService.class
 com\thsolucoes\helpdesk\domain\Token.class
 com\thsolucoes\helpdesk\gateways\SoftwareCollectorGateway.class
+com\thsolucoes\helpdesk\domain\Ticket.class
 com\thsolucoes\helpdesk\services\JacksonService.class
+com\thsolucoes\helpdesk\ui\HomeUI$5.class
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$4.class
 com\thsolucoes\helpdesk\domain\StorageUnit\OutputSU.class
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$2.class
 com\thsolucoes\helpdesk\gateways\GlobalCollectorGateway.class
+com\thsolucoes\helpdesk\ui\OpenTicketUI$1.class
 com\thsolucoes\helpdesk\hardware\StorageUnit.class
 com\thsolucoes\helpdesk\domain\Client.class
 com\thsolucoes\helpdesk\ui\HomeUI$1.class
+com\thsolucoes\helpdesk\ui\OpenTicketUI$2.class
 com\thsolucoes\helpdesk\ui\TokenAuthenticationUI$1.class
 com\thsolucoes\helpdesk\hardware\CentralProcessingUnit.class
 com\thsolucoes\helpdesk\ui\HomeUI.class

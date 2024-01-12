@@ -10,7 +10,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.FileSystem;
 import java.util.Properties;
 
 /**
@@ -34,10 +33,9 @@ public abstract class ClientSessionManager {
             String email = properties.getProperty("email");
 
             if (id != null && company != null && owner != null && enterpriseIdentifier != null && email != null) {
-                return new Client(Integer.valueOf(id), company, owner, enterpriseIdentifier, email);
+                return new Client(Integer.parseInt(id), company, owner, enterpriseIdentifier, email);
             }
         } catch (IOException e) {
-            e.printStackTrace();
         }
         return null;
     }
@@ -53,7 +51,6 @@ public abstract class ClientSessionManager {
         try (OutputStream output = new FileOutputStream(ARCHIVE_PROPERTIES)) {
             properties.store(output, null);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
